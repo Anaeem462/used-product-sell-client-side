@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import logo from "../../assets/logo.png";
 const Navbar = () => {
     const navItems = (
         <>
@@ -23,7 +23,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <Link to='/' className='btn btn-ghost normal-case text-xl'>
-                        SECOND-SELL
+                        <img src={logo} className='w-10 h-10' alt='' /> <span className='text-4xl text-yellow-500'>2</span> ND-SELL
                     </Link>
                 </div>
                 <div className='navbar-end hidden lg:flex'>
