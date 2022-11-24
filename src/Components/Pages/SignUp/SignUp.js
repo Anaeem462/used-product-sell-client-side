@@ -1,7 +1,18 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
+import saveUser from "./../../../utilities/function/saveUser";
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Context/AuthProvider";
+import { toast } from "react-hot-toast";
+
 const SignUp = () => {
+    const { createUser } = useContext(AuthContext);
+    //location
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location?.state?.from?.pathname || "/";
+
+    // form submit handler
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -9,13 +20,24 @@ const SignUp = () => {
         const email = form.email.value;
         const password = form.password.value;
         const role = form.role.value;
-        const formData = {
-            name,
-            email,
-            password,
-            role,
-        };
+
+        // create user in firebase
+        createUser(email, password)
+            .then((result) => {
+                if (result.user) {
+                    toast.success("successfully create user");
+                    //save user in mongodb and get token from server also set token in localstorage
+                    saveUser(email, name, role, password, "", from, navigate);
+                }
+
+                console.log(result.user);
+            })
+            .catch((err) => {
+                toast.error(err.message);
+                console.log(err);
+            });
     };
+    const handleGoogleSignUp = () => {};
     return (
         <div className='flex items-center justify-center my-12'>
             {" "}
@@ -41,7 +63,7 @@ const SignUp = () => {
                     </div>
                     <div className='flex items-center justify-evenly my-2'>
                         <div className='flex items-center'>
-                            <input type='radio' className='radio mr-2 radio-info' id='user' name='role' value='User' checked />
+                            <input type='radio' className='radio mr-2 radio-info' id='user' name='role' value='User' defaultChecked />
                             <label htmlFor='user'>User</label>
                         </div>
 
@@ -54,9 +76,8 @@ const SignUp = () => {
                     <div className='form-control mt-6'>
                         <button className='btn btn-primary'> Sign up</button>
                     </div>
-                    <div className=' py-3'>
-                        <FcGoogle className='text-3xl' />
-                    </div>
+
+                    <FcGoogle className='text-3xl btn w-full btn-outline my-3 py-2' onClick={handleGoogleSignUp} />
                 </form>
             </div>
         </div>
