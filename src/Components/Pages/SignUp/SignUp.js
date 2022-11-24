@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import saveUser from "./../../../utilities/function/saveUser";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,7 +6,8 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import { toast } from "react-hot-toast";
 
 const SignUp = () => {
-    const { createUser } = useContext(AuthContext);
+    const { createUser, googleSignin } = useContext(AuthContext);
+
     //location
     const location = useLocation();
     const navigate = useNavigate();
@@ -37,7 +38,18 @@ const SignUp = () => {
                 console.log(err);
             });
     };
-    const handleGoogleSignUp = () => {};
+    const handleGoogleSignUp = () => {
+        googleSignin()
+            .then((result) => {
+                toast.success("successfully google sign in");
+                saveUser(result.user.email, result.user.displayName, "user", result.user.uid, result.providerId, from, navigate);
+                console.log(result);
+            })
+            .catch((err) => {
+                toast.error(err.message);
+                console.log(err);
+            });
+    };
     return (
         <div className='flex items-center justify-center my-12'>
             {" "}
