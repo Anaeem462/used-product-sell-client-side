@@ -28,10 +28,10 @@ const Dashboard = () => {
                             <Link to='/mybuyers'>My Buyers</Link>
                         </li>
                         <li>
-                            <Link to='/allsellers'>All Sellers</Link>
+                            <Link to='/dashboard/allsellers'>All Sellers</Link>
                         </li>
                         <li>
-                            <Link to='/allbuyers'>All Buyers</Link>
+                            <Link to='/dashboard/allbuyers'>All Buyers</Link>
                         </li>
                         <li>
                             <Link to='/reporteditems'>reported items</Link>
