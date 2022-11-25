@@ -57,8 +57,8 @@ const Navbar = () => {
     );
     return (
         <div>
-            <div className='navbar bg-base-100'>
-                <div className='navbar-start'>
+            <div className='navbar justify-between bg-base-100'>
+                <div className='navbar-start '>
                     <div className='dropdown'>
                         <label tabIndex={0} className='btn btn-ghost  lg:hidden'>
                             <FaBars />
@@ -69,6 +69,10 @@ const Navbar = () => {
                         <img src={logo} className='w-10 h-10' alt='' /> <span className='text-4xl text-yellow-500'>2</span> ND-SELL
                     </Link>
                 </div>
+                <label htmlFor='my-drawer-2' className='btn  btn-primary drawer-button lg:hidden'>
+                    <FaBars />
+                </label>
+
                 <div className='navbar-end hidden lg:flex'>
                     <ul className='menu menu-horizontal p-0'>{navItems}</ul>
                 </div>

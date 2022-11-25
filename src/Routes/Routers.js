@@ -7,6 +7,7 @@ import Main from "./../Components/Layout/Main";
 import LogIn from "./../Components/Pages/LogIn/LogIn";
 import SignUp from "./../Components/Pages/SignUp/SignUp";
 import ErrorPage from "./../Components/Shared/ErrorPage/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
 
 export const routers = createBrowserRouter([
     {
@@ -34,12 +35,20 @@ export const routers = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <DashboardLayout></DashboardLayout>,
+        element: (
+            <PrivateRoute>
+                <DashboardLayout></DashboardLayout>
+            </PrivateRoute>
+        ),
         errorElement: <ErrorPage></ErrorPage>,
         children: [
             {
                 path: "/dashboard",
-                element: <Dashboard></Dashboard>,
+                element: (
+                    <PrivateRoute>
+                        <Dashboard></Dashboard>
+                    </PrivateRoute>
+                ),
             },
         ],
     },
