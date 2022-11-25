@@ -5,15 +5,16 @@ import { toast } from "react-hot-toast";
 
 import { AuthContext } from "../Context/AuthProvider";
 import Spinner from "../Components/Shared/spinner/Spinner";
-import useAdmin from "./../utilities/hooks/useAdmin";
 
-const AdminRoute = ({ children }) => {
+import useHost from "./../utilities/hooks/UseHost";
+
+const HostRoute = ({ children }) => {
     const { user, loading, logOut } = useContext(AuthContext);
-    const [isAdmin, adminLoading] = useAdmin(user?.email);
-    if (loading && adminLoading) {
+    const [isHost, hostLoading] = useHost(user?.email);
+    if (loading && hostLoading) {
         return <Spinner></Spinner>;
     }
-    if (user && isAdmin) {
+    if (user && isHost) {
         return children;
     } else {
         toast.error("you are not an admin");
@@ -21,4 +22,4 @@ const AdminRoute = ({ children }) => {
     }
 };
 
-export default AdminRoute;
+export default HostRoute;

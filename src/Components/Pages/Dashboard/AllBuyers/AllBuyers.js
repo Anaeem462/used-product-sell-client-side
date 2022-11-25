@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Spinner from "../../../Shared/spinner/Spinner";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
@@ -23,10 +23,11 @@ const AllBuyers = () => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
             method: "PUT",
             headers: { authorization: localStorage.getItem("userToken") },
+            body: JSON.stringify({ role: "host" }),
         })
             .then((res) => res.json())
             .then((result) => {
-                if (result.deletCount > 0) {
+                if (result.modifiedCount > 0) {
                     toast.success("successfully deleted item");
                 }
                 refetch();
@@ -73,7 +74,7 @@ const AllBuyers = () => {
                                 <td>{user?.role}</td>
                                 <td>
                                     <Link onClick={() => handleMakeHost(user)} className='btn btn-xs btn-primary'>
-                                        approved
+                                        make-host
                                     </Link>
                                 </td>
                                 <td>

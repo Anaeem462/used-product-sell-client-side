@@ -18,7 +18,22 @@ const AllSellers = () => {
     if (isLoading) {
         return <Spinner></Spinner>;
     }
-    const handleApprove = () => {};
+    const handleverfied = (user) => {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
+            method: "PUT",
+            headers: { authorization: localStorage.getItem("userToken") },
+            body: JSON.stringify({ verified: true }),
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                if (result.modifiedCount > 0) {
+                    toast.success("successfully deleted item");
+                }
+                refetch();
+                console.log(result);
+            })
+            .catch((err) => console.log(err.message));
+    };
     const handleDelete = (user) => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
             method: "DELETE",
@@ -56,8 +71,8 @@ const AllSellers = () => {
                                 <td>{user?.email}</td>
                                 <td>{user?.role}</td>
                                 <td>
-                                    <Link onClick={() => handleApprove(user)} className='btn btn-xs btn-primary'>
-                                        approved
+                                    <Link onClick={() => handleverfied(user)} className='btn btn-xs btn-primary'>
+                                        verify
                                     </Link>
                                 </td>
                                 <td>
