@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Category from "../Components/Pages/Category/Category";
 import Home from "../Components/Pages/Home/HomeLayout/Home";
 import Main from "./../Components/Layout/Main";
 import LogIn from "./../Components/Pages/LogIn/LogIn";
@@ -21,6 +22,11 @@ export const routers = createBrowserRouter([
             {
                 path: "/signup",
                 element: <SignUp></SignUp>,
+            },
+            {
+                path: "/category/:id",
+                element: <Category></Category>,
+                loader: ({ params }) => fetch(`${process.env.REACT_APP_SERVER_URL}/products?id=${params.id}`),
             },
         ],
     },

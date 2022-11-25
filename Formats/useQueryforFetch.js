@@ -1,4 +1,7 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useQuery } from "@tanstack/react-query";
+const queryclient = new QueryClient();
+<QueryClientProvider client={queryclient}></QueryClientProvider>;
 
 const { data: specialities = [], isLoading } = useQuery({
     queryKey: ["speciality"],
