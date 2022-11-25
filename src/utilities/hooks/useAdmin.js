@@ -14,6 +14,7 @@ const useAdmin = (email) => {
                 .then((res) => res.json())
                 .then((result) => {
                     setAdminLoading(false);
+                    console.log(result);
                     if (result?.role === "admin") {
                         setIsAdmin(true);
                     }

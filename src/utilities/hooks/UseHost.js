@@ -14,6 +14,7 @@ const useHost = (email) => {
                 .then((res) => res.json())
                 .then((result) => {
                     setHostLoading(false);
+                    console.log(result);
                     if (result?.role === "host") {
                         setIsHost(true);
                     }

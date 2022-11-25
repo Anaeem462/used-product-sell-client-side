@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import Blog from "../Components/Pages/Blog/Blog";
 import Category from "../Components/Pages/Category/Category";
 import AddProduct from "../Components/Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../Components/Pages/Dashboard/AllBuyers/AllBuyers";
@@ -38,6 +39,10 @@ export const routers = createBrowserRouter([
             {
                 path: "/category",
                 element: <Category></Category>,
+            },
+            {
+                path: "/blog",
+                element: <Blog></Blog>,
             },
         ],
     },

@@ -16,10 +16,10 @@ const saveUser = (email, name, role, codes, system, from, navigate) => {
         .then((res) => res.json())
         .then((result) => {
             // console.log(result);
-            if (result.result.acknowledged && result.token) {
+            if (result.result.acknowledged) {
                 toast.success("successfully log in", { position: "top-center", duration: "2000" });
             } else if (!result.result.acknowledged) {
-                toast.success(result.result.message);
+                toast.error(result.result.message);
                 console.log(result);
             }
             localStorage.setItem("userToken", result.token);

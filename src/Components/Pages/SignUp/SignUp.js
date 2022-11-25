@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import saveUser from "./../../../utilities/function/saveUser";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { toast } from "react-hot-toast";
 
@@ -84,11 +84,13 @@ const SignUp = () => {
                         </div>
 
                         <div className='flex items-center'>
-                            <input type='radio' className='radio mr-2 radio-info' id='seller' name='role' value='Seller' />
-                            <label htmlFor='seller'>Seller</label>
+                            <input type='radio' className='radio mr-2 radio-info' id='host' name='role' value='host' />
+                            <label htmlFor='host'>seller</label>
                         </div>
                     </div>
-
+                    <p>
+                        Already have an account? <Link to='/login'>log in</Link>
+                    </p>
                     <div className='form-control mt-6'>
                         <button className='btn btn-primary'> Sign up</button>
                     </div>

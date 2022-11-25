@@ -35,6 +35,7 @@ const AllBuyers = () => {
             })
             .catch((err) => console.log(err.message));
     };
+
     const handleDelete = (user) => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
             method: "DELETE",
