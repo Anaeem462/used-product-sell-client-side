@@ -1,8 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 import Category from "../Components/Pages/Category/Category";
+import AddProduct from "../Components/Pages/Dashboard/AddProduct/AddProduct";
 import Dashboard from "../Components/Pages/Dashboard/Dashboard/Dashboard";
 
 import MyOrders from "../Components/Pages/Dashboard/MyOrders/MyOrders";
+import MyProducts from "../Components/Pages/Dashboard/MyProducts/MyProducts";
 import Payment from "../Components/Pages/Dashboard/Payment/Payment";
 import Home from "../Components/Pages/Home/HomeLayout/Home";
 import Main from "./../Components/Layout/Main";
@@ -63,6 +65,22 @@ export const routers = createBrowserRouter([
                     fetch(`${process.env.REACT_APP_SERVER_URL}/products/${params.id}`, {
                         headers: { authorization: localStorage.getItem("userToken") },
                     }),
+            },
+            {
+                path: "/dashboard/addproduct",
+                element: (
+                    <PrivateRoute>
+                        <AddProduct></AddProduct>
+                    </PrivateRoute>
+                ),
+            },
+            {
+                path: "/dashboard/myproducts",
+                element: (
+                    <PrivateRoute>
+                        <MyProducts></MyProducts>
+                    </PrivateRoute>
+                ),
             },
         ],
     },
