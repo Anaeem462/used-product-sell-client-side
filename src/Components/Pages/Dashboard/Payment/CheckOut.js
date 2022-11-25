@@ -1,52 +1,34 @@
-const stripePromise = loadStripe(process.env.REACT_APP_stripe_paymentkey);
+import React, { useContext, useEffect, useState } from "react";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { AuthContext } from "../../../../Context/AuthProvider";
 
-const Payment = () => {
-    const data = useLoaderData();
-    const { appointmentDate, email, patientName, price, slot, treatmentName } = data;
-    return (
-        <div>
-            <h1 className='text-3xl bold'>Payment for {treatmentName}</h1>
-            <p className='text-xl'>
-                Please pay <strong>${price}</strong> for your appointment in {appointmentDate} at {slot}
-            </p>
-            <div>
-                <Elements stripe={stripePromise}>
-                    <Checkout data={data}></Checkout>
-                </Elements>
-            </div>
-        </div>
-    );
-};
-
-const Checkout = ({ data }) => {
+const CheckOut = ({ data }) => {
+    const { user } = useContext(AuthContext);
     const [clientSecretKey, setClientSecretKey] = useState();
     const [processing, setProcessing] = useState(false);
+    const stripe = useStripe();
+    const elements = useElements();
     const [cardError, setCardError] = useState();
     const [success, setSuccess] = useState();
     const [transactionId, setTransactionId] = useState();
-
-    const stripe = useStripe();
-    const elements = useElements();
-
-    const { price, patientName, email, treatmentName, slot, appointmentDate, _id } = data;
+    const { buyerEmail, buyerName, productName, productPrice, _id, productId } = data;
 
     useEffect(() => {
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/create-payment-intent`, {
             method: "POST",
             headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
-            body: JSON.stringify({ price }),
+            body: JSON.stringify({ productPrice }),
         })
             .then((res) => res.json())
             .then((result) => {
                 setClientSecretKey(result.clientSecret);
             });
-    }, [price]);
+    }, [productPrice]);
 
     const handleSubmit = async (e) => {
         setProcessing(true);
         e.preventDefault();
         setSuccess("");
-
         if (!stripe || !elements) {
             return;
         }
@@ -72,8 +54,8 @@ const Checkout = ({ data }) => {
             payment_method: {
                 card: card,
                 billing_details: {
-                    name: patientName,
-                    email: email,
+                    name: buyerName,
+                    email: buyerEmail,
                 },
             },
         });
@@ -83,20 +65,18 @@ const Checkout = ({ data }) => {
             setProcessing(false);
             return;
         }
-
         if (paymentIntent.status === "succeeded") {
             setSuccess("congratulation! payment successfully");
             setTransactionId(paymentIntent.id);
             const payments = {
-                name: patientName,
-                treatmentName,
-                treatment_Date: appointmentDate,
-                treatment_time: slot,
-                email,
+                name: buyerName,
+                productName,
+                email: buyerEmail,
                 transaction_id: paymentIntent.id,
-                booking_id: _id,
+                ordersId: _id,
+                productId,
             };
-            fetch("http://localhost:5000/payments", {
+            fetch(`${process.env.REACT_APP_SERVER_URL}/payments`, {
                 method: "POST",
                 headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
                 body: JSON.stringify(payments),
@@ -147,27 +127,4 @@ const Checkout = ({ data }) => {
     );
 };
 
-/*
-in server side
-*/
-
-// npm install stripe --save
-
-// STRIPE_SECRET_KEY = sk_test_51M5uWPK0xncwrEopUNbKB8AZC0zlJEoml8NiHJlkMpvWIyzc4n6pK4mEwArxhsaDmi0g28A5VRsiR4rasOcQYqwb00DNyh5SPp;
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-//user payment
-app.post("/create-payment-intent", async (req, res) => {
-    const booking = req.body;
-    const price = booking.price;
-    console.log(price);
-    const paymentIntent = await stripe.paymentIntents.create({
-        amount: price * 100,
-        currency: "usd",
-        payment_method_types: ["card"],
-    });
-
-    res.send({
-        clientSecret: paymentIntent.client_secret,
-    });
-});
+export default CheckOut;

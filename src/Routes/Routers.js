@@ -3,6 +3,7 @@ import Category from "../Components/Pages/Category/Category";
 import Dashboard from "../Components/Pages/Dashboard/Dashboard/Dashboard";
 
 import MyOrders from "../Components/Pages/Dashboard/MyOrders/MyOrders";
+import Payment from "../Components/Pages/Dashboard/Payment/Payment";
 import Home from "../Components/Pages/Home/HomeLayout/Home";
 import Main from "./../Components/Layout/Main";
 import LogIn from "./../Components/Pages/LogIn/LogIn";
@@ -50,6 +51,18 @@ export const routers = createBrowserRouter([
                         <MyOrders></MyOrders>
                     </PrivateRoute>
                 ),
+            },
+            {
+                path: "/dashboard/payments/:id",
+                element: (
+                    <PrivateRoute>
+                        <Payment></Payment>
+                    </PrivateRoute>
+                ),
+                loader: ({ params }) =>
+                    fetch(`${process.env.REACT_APP_SERVER_URL}/products/${params.id}`, {
+                        headers: { authorization: localStorage.getItem("userToken") },
+                    }),
             },
         ],
     },

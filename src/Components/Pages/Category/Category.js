@@ -41,7 +41,7 @@ const Category = () => {
         const productName = form.product.value;
         const buyerPhone = form.phone.value;
         const buyerLocation = form.location.value;
-        const procutPrice = form.price.value;
+        const productPrice = form.price.value;
         const productId = productData._id;
 
         const bookingInfo = {
@@ -49,7 +49,7 @@ const Category = () => {
             buyerEmail,
             buyerPhone,
             buyerLocation,
-            procutPrice,
+            productPrice,
             productId,
             productName,
             productImage: productData.poduct_Image,

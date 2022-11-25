@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../../../../Context/AuthProvider";
 import Spinner from "../../../Shared/spinner/Spinner";
 import { toast } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const MyOrders = () => {
     const { user } = useContext(AuthContext);
@@ -65,7 +66,9 @@ const MyOrders = () => {
                                 <td>{product.productName}</td>
                                 <td>{product.procutPrice}</td>
                                 <td>
-                                    <button className='btn btn-xs btn-primary'>pay</button>
+                                    <Link to={`/dashboard/payments/${product._id}`} className='btn btn-xs btn-primary'>
+                                        pay
+                                    </Link>
                                 </td>
                                 <td>
                                     <button className='btn btn-xs btn-error' onClick={() => handleDelete(product)}>
