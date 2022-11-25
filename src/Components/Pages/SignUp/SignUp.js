@@ -6,7 +6,7 @@ import { AuthContext } from "../../../Context/AuthProvider";
 import { toast } from "react-hot-toast";
 
 const SignUp = () => {
-    const { createUser, googleSignin } = useContext(AuthContext);
+    const { createUser, googleSignin, updateUserProfile } = useContext(AuthContext);
 
     //location
     const location = useLocation();
@@ -26,9 +26,13 @@ const SignUp = () => {
         createUser(email, password)
             .then((result) => {
                 if (result.user) {
-                    toast.success("successfully create user");
-                    //save user in mongodb and get token from server also set token in localstorage
-                    saveUser(email, name, role, password, "", from, navigate);
+                    updateUserProfile(name)
+                        .then(() => {
+                            toast.success("successfully create user");
+                            //save user in mongodb and get token from server also set token in localstorage
+                            saveUser(email, name, role, password, "", from, navigate);
+                        })
+                        .catch((err) => console.log("update- profie", err.message));
                 }
 
                 console.log(result.user);

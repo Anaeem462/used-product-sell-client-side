@@ -24,9 +24,8 @@ export const routers = createBrowserRouter([
                 element: <SignUp></SignUp>,
             },
             {
-                path: "/category/:id",
+                path: "/category",
                 element: <Category></Category>,
-                loader: ({ params }) => fetch(`${process.env.REACT_APP_SERVER_URL}/products?id=${params.id}`),
             },
         ],
     },

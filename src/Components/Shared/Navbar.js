@@ -1,8 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../Context/AuthProvider";
+import Spinner from "./spinner/Spinner";
 const Navbar = () => {
+    const { state } = useLocation();
+    const { user, logOut } = useContext(AuthContext);
+
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         fetch(`${process.env.REACT_APP_SERVER_URL}/users?email=${user?.email}`, {
+    //             headers: { authorization: localStorage.getItem("userToken") },
+    //         })
+    //             .then((res) => res.json())
+    //             .then((result) => console.log(result))
+    //             .catch((err) => console.log(err));
+    //     }
+    // }, [user?.email]);
+
     const handleOnSelect = (e) => {
         const id = e.target.value;
     };
@@ -10,27 +27,29 @@ const Navbar = () => {
     const navItems = (
         <>
             <li>
-                <Link to='/login'>Log in</Link>
-            </li>
-            <li>
-                <Link to='/signup'>Sign Up</Link>
+                <Link to='/'>Home</Link>
             </li>
 
             <li>
-                <select name='category' id='' className='select w-full px-5 mx-3 rounded-md'>
-                    <option value='Iphone'>Category</option>
-                    <option value='Iphone'>
-                        {" "}
-                        <Link to={`/category/Iphone`}>Iphone</Link>
-                    </option>
-                    <option value='Xiaomi'>
-                        <Link to={`/category/xiaomi`}>xiaomi</Link>
-                    </option>
-                    <option value='Poco'>
-                        <Link to={`/category/poco`}>Poco</Link>
-                    </option>
-                </select>
+                <Link to='/category'>Product-Category</Link>
             </li>
+
+            {user?.email ? (
+                <>
+                    <li className='font-sans' onClick={logOut}>
+                        <Link>Log out</Link>
+                    </li>
+                </>
+            ) : (
+                <>
+                    <li>
+                        <Link to='/login'>Log in</Link>
+                    </li>
+                    <li>
+                        <Link to='/signup'>Sign Up</Link>
+                    </li>
+                </>
+            )}
         </>
     );
     return (
