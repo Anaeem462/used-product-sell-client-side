@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { AuthContext } from "../../../../Context/AuthProvider";
+import { toast } from "react-hot-toast";
 
 const CheckOut = ({ data }) => {
-    const { user } = useContext(AuthContext);
     const [clientSecretKey, setClientSecretKey] = useState();
     const [processing, setProcessing] = useState(false);
     const stripe = useStripe();
@@ -83,6 +83,7 @@ const CheckOut = ({ data }) => {
             })
                 .then((res) => res.json())
                 .then((result) => {
+                    toast.success("payment successfully");
                     console.log(result);
                 })
                 .catch((err) => console.error(err.message));

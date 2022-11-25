@@ -1,3 +1,8 @@
+// npm install --save @stripe/react-stripe-js @stripe/stripe-js
+
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckOut from "./CheckOut";
 const stripePromise = loadStripe(process.env.REACT_APP_stripe_paymentkey);
 
 const Payment = () => {
@@ -17,6 +22,7 @@ const Payment = () => {
         </div>
     );
 };
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
 const Checkout = ({ data }) => {
     const [clientSecretKey, setClientSecretKey] = useState();
@@ -156,13 +162,22 @@ in server side
 // STRIPE_SECRET_KEY = sk_test_51M5uWPK0xncwrEopUNbKB8AZC0zlJEoml8NiHJlkMpvWIyzc4n6pK4mEwArxhsaDmi0g28A5VRsiR4rasOcQYqwb00DNyh5SPp;
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
+const paymentsCollection = secondSellDb.collection("payments");
 //user payment
+/// for payment get product data
+app.get("/products/:id", verifyJwt, async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const product = await ordersCollection.findOne(query);
+    res.send(product);
+});
+
 app.post("/create-payment-intent", async (req, res) => {
-    const booking = req.body;
-    const price = booking.price;
-    console.log(price);
+    const { productPrice } = req.body;
+
+    console.log(productPrice);
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: price * 100,
+        amount: productPrice * 100,
         currency: "usd",
         payment_method_types: ["card"],
     });
@@ -170,4 +185,10 @@ app.post("/create-payment-intent", async (req, res) => {
     res.send({
         clientSecret: paymentIntent.client_secret,
     });
+});
+app.post("/payments", verifyJwt, async (req, res) => {
+    const data = req.body;
+    const result = await paymentsCollection.insertOne(data);
+    console.log(result);
+    res.send(result);
 });

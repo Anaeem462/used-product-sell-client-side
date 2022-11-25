@@ -66,12 +66,12 @@ const MyOrders = () => {
                                 <td>{product.productName}</td>
                                 <td>{product.procutPrice}</td>
                                 <td>
-                                    <Link to={`/dashboard/payments/${product._id}`} className='btn btn-xs btn-primary'>
-                                        pay
+                                    <Link to={`/dashboard/payments/${product._id}`} disabled={product?.payment} className='btn btn-xs btn-primary'>
+                                        {product.payment ? "Paid" : "pay"}
                                     </Link>
                                 </td>
                                 <td>
-                                    <button className='btn btn-xs btn-error' onClick={() => handleDelete(product)}>
+                                    <button className='btn btn-xs btn-error' disabled={product?.payment} onClick={() => handleDelete(product)}>
                                         delete
                                     </button>
                                 </td>
