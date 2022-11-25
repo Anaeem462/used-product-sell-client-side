@@ -14,11 +14,11 @@ const Category = () => {
     const { state } = useLocation();
     const [productData, setProductData] = useState(null);
 
-    //get data from database
+    //get data  by category from database
     const { data, isLoading, refetch } = useQuery({
         queryKey: ["products", state],
         queryFn: async () => {
-            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/products?id=${state}`);
+            const res = await fetch(`${process.env.REACT_APP_SERVER_URL}/products?category=${state}`);
             const data = await res.json();
             return data;
         },
@@ -26,6 +26,7 @@ const Category = () => {
     if (isLoading) {
         return <Spinner></Spinner>;
     }
+
     const handleBooked = (product) => {
         if (!user) {
             return toast.error("please sign up first");
@@ -40,22 +41,37 @@ const Category = () => {
         const productName = form.product.value;
         const buyerPhone = form.phone.value;
         const buyerLocation = form.location.value;
-        const productPrice = form.price.value;
+        const procutPrice = form.price.value;
         const productId = productData._id;
+
         const bookingInfo = {
             buyerName,
             buyerEmail,
-            productId,
-            productName,
-            buyerEmail,
             buyerPhone,
             buyerLocation,
-            productPrice,
+            procutPrice,
+            productId,
+            productName,
+            productImage: productData.poduct_Image,
         };
-        toast.success(`${productName} is successfully booking`);
-        setProductData(null);
-        console.log(bookingInfo);
+        fetch(`${process.env.REACT_APP_SERVER_URL}/orders?id=${productId}`, {
+            method: "PUT",
+            headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
+            body: JSON.stringify(bookingInfo),
+        })
+            .then((res) => res.json())
+            .then((result) => {
+                setProductData(null);
+                if (result.acknowledged || result.matchedCount) {
+                    console.log(result);
+                    toast.success(`${productName} is successfully booking`);
+                } else {
+                    toast.error(result.message);
+                }
+            })
+            .catch((err) => console.log(err.message));
     };
+
     return (
         <div>
             <div className=' flex justify-center my-12'>
