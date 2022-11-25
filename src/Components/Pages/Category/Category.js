@@ -52,6 +52,7 @@ const Category = () => {
             buyerLocation,
             productPrice,
         };
+        toast.success(`${productName} is successfully booking`);
         setProductData(null);
         console.log(bookingInfo);
     };

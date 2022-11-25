@@ -39,6 +39,9 @@ const Navbar = () => {
                     <li className='font-sans' onClick={logOut}>
                         <Link>Log out</Link>
                     </li>
+                    <li className='font-sans'>
+                        <Link to='/dashboard'>Dashboard</Link>
+                    </li>
                 </>
             ) : (
                 <>
