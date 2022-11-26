@@ -5,6 +5,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.4",
     "@heroicons/react": "^2.0.13",
+    "@lottiefiles/react-lottie-player": "^3.4.9",
     "@react-icons/all-files": "^4.1.0",
     "@stripe/react-stripe-js": "^1.15.0",
     "@stripe/stripe-js": "^1.44.1",

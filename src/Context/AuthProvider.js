@@ -9,7 +9,6 @@ import {
     updateProfile,
 } from "firebase/auth";
 import auth from "./../utilities/auth/firebase/firebase.config";
-import SignUp from "./../Components/Pages/SignUp/SignUp";
 
 // make context
 export const AuthContext = createContext("");
@@ -35,6 +34,7 @@ const AuthProvider = ({ children }) => {
     };
 
     // log out user
+
     const logOut = () => {
         setLoading(true);
         return signOut(auth);
@@ -46,10 +46,13 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
         return signInWithPopup(auth, provider);
     };
+
     //update user
+
     const updateUserProfile = (name) => {
         return updateProfile(auth.currentUser, { displayName: name });
     };
+
     // set current user data
 
     useEffect(() => {

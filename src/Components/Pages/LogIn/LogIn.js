@@ -1,5 +1,5 @@
 import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
@@ -7,7 +7,7 @@ import saveUser from "../../../utilities/function/saveUser";
 
 const LogIn = () => {
     const { login, googleSignin, updateUserProfile } = useContext(AuthContext);
-
+    const [loginError, setLoginError] = useState();
     //location
     const location = useLocation();
     const navigate = useNavigate();
@@ -15,6 +15,7 @@ const LogIn = () => {
 
     // form submit handler
     const handleSubmit = (e) => {
+        setLoginError("");
         e.preventDefault();
         const form = e.target;
         const name = form.name.value;
@@ -25,7 +26,7 @@ const LogIn = () => {
         login(email, password)
             .then((result) => {
                 if (result.user) {
-                    // toast.success("successfully create user");
+                    toast.success("successfully log in", { duration: 2000 });
                     //save user in mongodb and get token from server also set token in localstorage
                     saveUser(email, name, "", password, "", from, navigate);
                 }
@@ -34,18 +35,22 @@ const LogIn = () => {
             })
             .catch((err) => {
                 toast.error(err.message);
+                setLoginError(err.message);
                 console.log(err);
+                form.reset();
             });
     };
     const handleGoogleSignUp = () => {
+        setLoginError("");
         googleSignin()
             .then((result) => {
-                // toast.success("successfully google sign in");
+                toast.success("successfully google log in");
                 saveUser(result.user.email, result.user.displayName, "", result.user.uid, result.providerId, from, navigate);
                 console.log(result);
             })
             .catch((err) => {
                 // toast.error(err.message);
+                setLoginError(err.message);
                 console.log(err);
             });
     };
@@ -66,6 +71,7 @@ const LogIn = () => {
                         </label>
                         <input type='password' placeholder='password' name='password' className='input input-bordered' />
                     </div>
+                    <p className='text-red-700 text-[12px]'>{loginError}</p>
                     <p>
                         Don't have an account? <Link to='/signup'>sign up</Link>
                     </p>

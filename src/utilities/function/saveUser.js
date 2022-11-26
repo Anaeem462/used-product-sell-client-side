@@ -8,7 +8,7 @@ const saveUser = (email, name, role, codes, system, from, navigate) => {
         user["password"] = codes;
     }
 
-    fetch(`${process.env.REACT_APP_SERVER_URL}/setUser?email=${email}`, {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/setuser?email=${email}`, {
         method: "PUT",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(user),
@@ -17,10 +17,7 @@ const saveUser = (email, name, role, codes, system, from, navigate) => {
         .then((result) => {
             // console.log(result);
             if (result.result.acknowledged) {
-                toast.success("successfully log in", { position: "top-center", duration: "2000" });
-            } else if (!result.result.acknowledged) {
-                toast.error(result.result.message);
-                console.log(result);
+                toast.success("successfully log in", { position: "top-center", duration: 2000 });
             }
             localStorage.setItem("userToken", result.token);
             navigate(from, { replace: true });
