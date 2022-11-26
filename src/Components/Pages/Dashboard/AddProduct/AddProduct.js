@@ -2,8 +2,6 @@ import React from "react";
 import { toast } from "react-hot-toast";
 
 const AddProduct = () => {
-    const date = new Date();
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -29,10 +27,13 @@ const AddProduct = () => {
         })
             .then((res) => res.json())
             .then((result) => {
-                toast.error(result.message);
+                toast.success("successfully added product");
                 console.log(result);
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error(err.message);
+                console.error(err.message);
+            });
     };
 
     return (

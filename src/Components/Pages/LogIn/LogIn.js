@@ -46,7 +46,7 @@ const LogIn = () => {
             .then((result) => {
                 toast.success("successfully google log in");
                 saveUser(result.user.email, result.user.displayName, "", result.user.uid, result.providerId, from, navigate);
-                console.log(result);
+                // console.log(result);
             })
             .catch((err) => {
                 // toast.error(err.message);

@@ -6,6 +6,7 @@ import BookingModal from "./BookingModal/BookingModal";
 import Products from "./Products/Products";
 import { AuthContext } from "./../../../Context/AuthProvider";
 import { toast } from "react-hot-toast";
+import { Player } from "@lottiefiles/react-lottie-player";
 
 const Category = () => {
     const { user } = useContext(AuthContext);
@@ -63,8 +64,9 @@ const Category = () => {
             .then((result) => {
                 setProductData(null);
                 if (result.acknowledged || result.matchedCount) {
-                    console.log(result);
+                    // console.log(result);
                     toast.success(`${productName} is successfully booking`);
+                    refetch();
                 } else {
                     toast.error(result.message);
                 }
@@ -80,7 +82,14 @@ const Category = () => {
                         <Products key={product._id} product={product} handleBooked={handleBooked}></Products>
                     ))}
                 </div>
+                {!state && (
+                    <div className='text-center'>
+                        <p className='text-4xl text-red-600'>'Please select a category'</p>
+                        <Player src='https://assets9.lottiefiles.com/packages/lf20_njobaah2.json' loop autoplay className='w-1/2'></Player>
+                    </div>
+                )}
             </div>
+
             {user && productData && <BookingModal productData={productData} handleSubmit={handleSubmit}></BookingModal>}
         </div>
     );

@@ -15,10 +15,9 @@ const AdminRoute = ({ children }) => {
     }
     if (user && isAdmin) {
         return children;
-    } else {
-        toast.error("you are not an admin");
-        return <Navigate to='/login' state={{ from: "/" }} replace></Navigate>;
     }
+    toast.error("you are not an admin");
+    return <Navigate to='/login' state={{ from: "/" }} replace></Navigate>;
 };
 
 export default AdminRoute;

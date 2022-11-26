@@ -2,15 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { AuthContext } from "../../../../Context/AuthProvider";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = ({ data }) => {
+    const navigate = useNavigate();
     const [clientSecretKey, setClientSecretKey] = useState();
+
     const [processing, setProcessing] = useState(false);
+
     const stripe = useStripe();
+
     const elements = useElements();
     const [cardError, setCardError] = useState();
     const [success, setSuccess] = useState();
     const [transactionId, setTransactionId] = useState();
+
     const { buyerEmail, buyerName, productName, productPrice, _id, productId } = data;
 
     useEffect(() => {
@@ -22,6 +28,10 @@ const CheckOut = ({ data }) => {
             .then((res) => res.json())
             .then((result) => {
                 setClientSecretKey(result.clientSecret);
+            })
+            .catch((err) => {
+                toast.error("cleint secret not found");
+                console.error("client secret", err.message);
             });
     }, [productPrice]);
 
@@ -84,9 +94,13 @@ const CheckOut = ({ data }) => {
                 .then((res) => res.json())
                 .then((result) => {
                     toast.success("payment successfully");
+                    navigate("/dashboard/myorders");
                     console.log(result);
                 })
-                .catch((err) => console.error(err.message));
+                .catch((err) => {
+                    console.error("payments unsuccessfull", err.message);
+                    toast.error(err.message);
+                });
         }
         setProcessing(false);
     };

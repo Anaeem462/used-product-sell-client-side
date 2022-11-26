@@ -7,8 +7,9 @@ const useAdmin = (email) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [adminLoading, setAdminLoading] = useState(true);
     useEffect(() => {
+        setAdminLoading(true);
         if (email) {
-            fetch(`${process.env.REACT_APP_SERVER_URL}/adminusers?email=${email}`, {
+            fetch(`${process.env.REACT_APP_SERVER_URL}/adminuser?email=${email}`, {
                 headers: { authorization: localStorage.getItem("userToken") },
             })
                 .then((res) => res.json())
@@ -17,9 +18,13 @@ const useAdmin = (email) => {
                     console.log(result);
                     if (result?.role === "admin") {
                         setIsAdmin(true);
+                    } else {
+                        setIsAdmin(false);
                     }
                 })
                 .catch((err) => {
+                    setIsAdmin(false);
+                    setAdminLoading(false);
                     toast.error(err.message);
                     console.eror(err.message);
                 });

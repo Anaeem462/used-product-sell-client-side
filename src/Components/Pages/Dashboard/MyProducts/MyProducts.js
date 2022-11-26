@@ -42,7 +42,7 @@ const MyProducts = () => {
     return (
         <div>
             {" "}
-            <div className='overflow-x-auto'>
+            <div className='overflow-x-auto mt-8'>
                 <table className='table w-full'>
                     <thead>
                         <tr>

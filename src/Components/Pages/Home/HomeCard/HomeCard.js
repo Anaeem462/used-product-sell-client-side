@@ -29,15 +29,20 @@ const HomeCard = () => {
 
     return (
         <>
-            <div className='card text-center my-7'>
-                <h1 className='text-4xl mt-7'>What Do You Want?</h1>
-                <h1 className='text-4xl my-2'>Here Is All Category</h1>
-                <div className='flex  justify-center gap-8'>
-                    {categories.map((category) => (
-                        <button onClick={() => handlebtn(category.name)} className='btn btn-primary text-white' key={category.id}>
-                            {category.name}
-                        </button>
-                    ))}
+            <div className='text-center   bg-blue-300 grid md:grid-cols-2 gap-4'>
+                <div className='border-r-2 border-gray-500 py-36 text-white '>
+                    <h1 className='text-7xl mt-7 text-primary'>What Do You Want?</h1>
+                    <h1 className='text-4xl my-4'>Here Is All Category</h1>
+                </div>
+                <div className='py-36'>
+                    <h1 className='text-5xl my-4 font-sans text-white'>Our Products</h1>
+                    <div className='flex  justify-center gap-8 '>
+                        {categories.map((category) => (
+                            <button onClick={() => handlebtn(category.name)} className='btn btn-primary text-white' key={category.id}>
+                                {category.name}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
         </>
