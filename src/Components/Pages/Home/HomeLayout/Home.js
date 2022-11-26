@@ -5,11 +5,12 @@ import { Player } from "@lottiefiles/react-lottie-player";
 const Home = () => {
     return (
         <div>
-            <div className=' bg-base-300 py-8 rounded-t-2xl'>
-                <Player src='https://assets3.lottiefiles.com/packages/lf20_skfh9odt.json' className='player w-full h-96' loop autoplay></Player>
-            </div>
-            {/* <Carousel></Carousel> */}
+            <Carousel></Carousel>
+
             <HomeCard></HomeCard>
+            <div className='  py-8 rounded-t-2xl'>
+                <Player src='https://assets3.lottiefiles.com/packages/lf20_skfh9odt.json' className='player w-full h-[600px]' loop autoplay></Player>
+            </div>
         </div>
     );
 };

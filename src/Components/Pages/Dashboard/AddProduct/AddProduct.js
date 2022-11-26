@@ -12,8 +12,15 @@ const AddProduct = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
-
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const fulldate = day + " " + month + " " + year;
     const onSubmit = (data) => {
+        //make date
+
+        // make image url
         const image = data.poduct_Image[0];
         const formdata = new FormData();
         formdata.append("image", image);
@@ -24,6 +31,8 @@ const AddProduct = () => {
                 if (imagedata.success) {
                     const photoUrl = imagedata.data.url;
                     data.poduct_Image = photoUrl;
+                    data["date"] = fulldate;
+
                     // ---------------set products in db---------
                     fetch(`${process.env.REACT_APP_SERVER_URL}/products`, {
                         method: "POST",
@@ -63,6 +72,7 @@ const AddProduct = () => {
                                     type='text'
                                     name='seller'
                                     value={user?.displayName}
+                                    // readOnly
                                     className='input input-bordered'
                                 />
                             </div>
@@ -78,6 +88,7 @@ const AddProduct = () => {
                                     type='email'
                                     name='seller_email'
                                     value={user?.email}
+                                    // readOnly
                                     className='input input-bordered'
                                 />
                             </div>

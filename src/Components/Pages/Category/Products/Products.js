@@ -3,7 +3,6 @@ import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../../Context/AuthProvider";
 import { MdVerifiedUser } from "@react-icons/all-files/md/MdVerifiedUser";
 const Products = ({ product, handleBooked }) => {
-    console.log(product);
     return (
         <div>
             <div className='card card-compact w-96 bg-base-100 shadow-2xl'>
