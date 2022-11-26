@@ -1,23 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-
-import { toast } from "react-hot-toast";
+import React, { useContext } from "react";
 
 import { AuthContext } from "../Context/AuthProvider";
 import Spinner from "../Components/Shared/spinner/Spinner";
 import useAdmin from "./../utilities/hooks/useAdmin";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const AdminRoute = ({ children }) => {
     const { user, loading, logOut } = useContext(AuthContext);
     const [isAdmin, adminLoading] = useAdmin(user?.email);
+    const navigate = useNavigate();
     if (loading && adminLoading) {
         return <Spinner></Spinner>;
     }
     if (user && isAdmin) {
         return children;
+    } else {
+        return navigate("/login");
     }
-    toast.error("you are not an admin");
-    return <Navigate to='/login' state={{ from: "/" }} replace></Navigate>;
 };
 
 export default AdminRoute;

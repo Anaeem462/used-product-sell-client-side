@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Spinner from "../../../Shared/spinner/Spinner";
 
 const AllSellers = () => {
+    const [verify, setVerify] = useState(false);
     const { data, isLoading, refetch } = useQuery({
         queryKey: ["allsellers"],
         queryFn: async () => {
@@ -18,11 +19,13 @@ const AllSellers = () => {
     if (isLoading) {
         return <Spinner></Spinner>;
     }
+
     const handleverfied = (user) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
+        setVerify(!verify);
+        fetch(`${process.env.REACT_APP_SERVER_URL}/verifiedhost?email=${user.email}`, {
             method: "PUT",
-            headers: { authorization: localStorage.getItem("userToken") },
-            body: JSON.stringify({ verified: true }),
+            headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
+            body: JSON.stringify({ verified: verify }),
         })
             .then((res) => res.json())
             .then((result) => {
@@ -30,19 +33,18 @@ const AllSellers = () => {
                     toast.success("successfully deleted item");
                 }
                 refetch();
-                console.log(result);
             })
             .catch((err) => console.log(err.message));
     };
     const handleDelete = (user) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/deleteuser?id=${user._id}`, {
             method: "DELETE",
             headers: { authorization: localStorage.getItem("userToken") },
         })
             .then((res) => res.json())
             .then((result) => {
-                if (result.deletCount > 0) {
-                    toast.success("successfully deleted item");
+                if (result.deletedCount > 0) {
+                    toast.success(`successfully deleted ${user.name}`);
                 }
                 refetch();
                 console.log(result);
@@ -51,7 +53,7 @@ const AllSellers = () => {
     };
     return (
         <div>
-            <div className='overflow-x-auto'>
+            <div className='overflow-x-auto mt-4'>
                 <table className='table w-full'>
                     <thead>
                         <tr>
@@ -72,7 +74,7 @@ const AllSellers = () => {
                                 <td>{user?.role}</td>
                                 <td>
                                     <Link onClick={() => handleverfied(user)} className='btn btn-xs btn-primary'>
-                                        verify
+                                        {user?.verified ? "cancel verify" : "verify"}
                                     </Link>
                                 </td>
                                 <td>

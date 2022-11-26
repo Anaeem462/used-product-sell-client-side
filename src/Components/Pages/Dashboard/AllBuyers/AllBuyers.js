@@ -20,31 +20,34 @@ const AllBuyers = () => {
     }
 
     const handleMakeHost = (user) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/makehost?id=${user._id}`, {
             method: "PUT",
-            headers: { authorization: localStorage.getItem("userToken") },
+            headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
             body: JSON.stringify({ role: "host" }),
         })
             .then((res) => res.json())
             .then((result) => {
-                if (result.modifiedCount > 0) {
-                    toast.success("successfully deleted item");
+                if (result.modifiedCoun > 0) {
+                    toast.success(`successfully make host ${user.name}`);
                 }
                 refetch();
-                console.log(result);
+                // console.log(result);
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                toast.error(err.message);
+                console.log(err.message);
+            });
     };
 
     const handleDelete = (user) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/user?id${user._id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/deleteuser?id=${user._id}`, {
             method: "DELETE",
             headers: { authorization: localStorage.getItem("userToken") },
         })
             .then((res) => res.json())
             .then((result) => {
-                if (result.deletCount > 0) {
-                    toast.success("successfully deleted item");
+                if (result.deletedCount > 0) {
+                    toast.success(`successfully deleted ${user.name}`);
                 }
                 refetch();
                 console.log(result);
@@ -54,7 +57,7 @@ const AllBuyers = () => {
     return (
         <div>
             {" "}
-            <div className='overflow-x-auto'>
+            <div className='overflow-x-auto mt-4'>
                 <table className='table w-full'>
                     <thead>
                         <tr>
@@ -74,7 +77,7 @@ const AllBuyers = () => {
                                 <td>{user?.email}</td>
                                 <td>{user?.role}</td>
                                 <td>
-                                    <Link onClick={() => handleMakeHost(user)} className='btn btn-xs btn-primary'>
+                                    <Link onClick={() => handleMakeHost(user)} className='btn btn-sm btn-primary'>
                                         make-host
                                     </Link>
                                 </td>

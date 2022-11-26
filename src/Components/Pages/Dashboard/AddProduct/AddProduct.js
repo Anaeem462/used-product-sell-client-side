@@ -1,142 +1,202 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { AuthContext } from "../../../../Context/AuthProvider";
 
 const AddProduct = () => {
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const { user } = useContext(AuthContext);
+    const imgbbUrl = process.env.REACT_APP_imgbbUrl;
+    const {
+        reset,
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-        const form = e.target;
-
-        const productData = {
-            name: form.product.value,
-            location: form.location.value,
-            resale_price: form.price.value,
-            use: form.yearofuse.value,
-            seller: form.name.value,
-            verified: false,
-            condition: form.condition.value,
-            category: form.category.value,
-            details: form.description.value,
-            seller_email: form.email.value,
-            seller_phone: form.phone.value,
-        };
-        fetch(`${process.env.REACT_APP_SERVER_URL}/products`, {
-            method: "POST",
-            headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
-            body: JSON.stringify(productData),
-        })
+    const onSubmit = (data) => {
+        const image = data.poduct_Image[0];
+        const formdata = new FormData();
+        formdata.append("image", image);
+        console.log(data);
+        fetch(imgbbUrl, { method: "POST", body: formdata })
             .then((res) => res.json())
-            .then((result) => {
-                toast.success("successfully added product");
-                console.log(result);
-            })
-            .catch((err) => {
-                toast.error(err.message);
-                console.error(err.message);
+            .then((imagedata) => {
+                if (imagedata.success) {
+                    const photoUrl = imagedata.data.url;
+                    data.poduct_Image = photoUrl;
+                    // ---------------set products in db---------
+                    fetch(`${process.env.REACT_APP_SERVER_URL}/products`, {
+                        method: "POST",
+                        headers: { "content-type": "application/json", authorization: localStorage.getItem("userToken") },
+                        body: JSON.stringify(data),
+                    })
+                        .then((res) => res.json())
+                        .then((result) => {
+                            if (result.insertedId && result.acknowledged) {
+                                toast.success("successfully added product");
+                                reset();
+                            }
+                        })
+                        .catch((err) => {
+                            toast.error(err.message);
+                            console.error(err.message);
+                        });
+                }
             });
     };
 
     return (
         <div>
             <div className='flex justify-center my-12'>
-                <div className='card w-2/3  shadow-2xl'>
-                    <form onSubmit={handleSubmit} className='card-body'>
+                <div className='card w-1/2  shadow-2xl'>
+                    <form onSubmit={handleSubmit(onSubmit)} className='card-body'>
                         <h1 className='text-2xl text-primary font-bold text-center'>Add A Product</h1>
-                        <div className='grid grid-cols-2 gap-4'>
-                            <div className='form-control'>
+                        <div className=' grid grid-cols-2 gap-2'>
+                            {/*---------------- input seller ---------------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>Your Name</span>
                                 </label>
-                                <input required type='text' name='name' className='input input-bordered' />
+                                <input
+                                    {...register("seller", { required: true })}
+                                    type='text'
+                                    name='seller'
+                                    value={user?.displayName}
+                                    className='input input-bordered'
+                                />
                             </div>
-                            <div className='form-control'>
+
+                            {/*------------- input seller_email ------------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>your Email</span>
                                 </label>
-                                <input required type='email' name='email' className='input input-bordered' />
+                                <input
+                                    {...register("seller_email", { required: true })}
+                                    type='email'
+                                    name='seller_email'
+                                    value={user?.email}
+                                    className='input input-bordered'
+                                />
                             </div>
-                            <div className='form-control'>
+
+                            {/*------------------ input name ---------------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>Product Name</span>
                                 </label>
-                                <input required type='text' name='product' className='input input-bordered' />
+                                <input
+                                    {...register("name", { required: true })}
+                                    type='text'
+                                    placeholder='product name'
+                                    name='name'
+                                    className='input input-bordered'
+                                />
                             </div>
-                            <div className='form-control'>
+
+                            {/*-------------- input seller_phone -----------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>Your Phone Number</span>
                                 </label>
-                                <input required type='tel' name='phone' placeholder='phone number' className='input input-bordered' />
+                                <input
+                                    {...register("seller_phone", { required: true })}
+                                    type='tel'
+                                    name='seller_phone'
+                                    placeholder='phone number'
+                                    className='input input-bordered'
+                                />
                             </div>
-                            <div className='form-control'>
+                            {/*--------------- input location---------------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>Meeting Location</span>
                                 </label>
-                                <input required type='text' name='location' placeholder='location' className='input input-bordered' />
+                                <input
+                                    {...register("location", { required: true })}
+                                    type='text'
+                                    name='location'
+                                    placeholder='location'
+                                    className='input input-bordered'
+                                />
                             </div>
-                            <div className='form-control'>
+
+                            {/*------------input resale_price --------------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>Product Price</span>
                                 </label>
-                                <input required type='text' name='price' className='input input-bordered' />
+                                <input
+                                    {...register("resale_Price", { required: true })}
+                                    type='text'
+                                    name='resale_price'
+                                    className='input input-bordered'
+                                />
                             </div>
-                            <div className='form-control'>
+
+                            {/*---------------- input use ------------------*/}
+
+                            <div>
                                 <label className='label'>
                                     <span className='label-text'>year of use</span>
                                 </label>
-                                <input required type='text' name='yearofuse' className='input input-bordered' />
+                                <input {...register("use", { required: true })} type='text' name='use' className='input input-bordered' />
                             </div>
 
-                            <div className='flex items-center justify-evenly my-2'>
-                                <div className='flex items-center'>
-                                    <input
-                                        required
-                                        type='radio'
-                                        className='radio mr-2 radio-info'
-                                        id='Excellent'
-                                        name='condition'
-                                        value='Excellent'
-                                        defaultChecked
-                                    />
-                                    <label htmlFor='Excellent'>Excellent</label>
-                                </div>
+                            {/* -------------- selected area ---------------*/}
 
-                                <div className='flex items-center'>
-                                    <input required type='radio' className='radio mr-2 radio-info' id='Good' name='condition' value='Good' />
-                                    <label htmlFor='Good'>Good</label>
+                            <div className='flex gap-3'>
+                                {/*--------------- selecet condition ---------------*/}
+                                <div>
+                                    <label className='label'>
+                                        <span className='label-text'>Condition</span>
+                                    </label>
+                                    <select name='condition' {...register("condition", { required: true })} className='select select-bordered '>
+                                        <option value='Excellent' defaultValue='Excellent'>
+                                            Excellent
+                                        </option>
+                                        <option value='Good'>Good</option>
+                                        <option value='fair'>Fair</option>
+                                    </select>
                                 </div>
-                                <div className='flex items-center'>
-                                    <input required type='radio' className='radio mr-2 radio-info' id='fair' name='condition' value='fair' />
-                                    <label htmlFor='fair'>Fair</label>
+                                {/*--------------- input  category ---------------*/}
+                                <div>
+                                    <label className='label'>
+                                        <span className='label-text'>Category</span>
+                                    </label>
+                                    <select name='category' {...register("category", { required: true })} className='select select-bordered '>
+                                        <option value='Iphone' defaultValue='Iphone'>
+                                            Iphone
+                                        </option>
+                                        <option value='poco'>poco</option>
+                                        <option value='xiaomi'>xiaomi</option>
+                                    </select>
                                 </div>
                             </div>
+                            {/*--------------- input details ---------------*/}
+
                             <div>
                                 <label className='label'>
                                     <span className='label-text'>Description</span>
                                 </label>
-                                <textarea className='textarea border border-slate-300 w-full' name='description' placeholder='Description'></textarea>
+                                <textarea
+                                    {...register("details", { required: true })}
+                                    className='textarea border border-slate-300 w-full'
+                                    name='details'
+                                    placeholder='Description'></textarea>
                             </div>
-                            <div className='flex items-center justify-evenly my-2'>
-                                <div className='flex items-center'>
-                                    <input
-                                        required
-                                        type='radio'
-                                        className='radio mr-2 radio-info'
-                                        id='Iphone'
-                                        name='category'
-                                        value='Iphone'
-                                        defaultChecked
-                                    />
-                                    <label htmlFor='Iphone'>Iphone</label>
-                                </div>
-
-                                <div className='flex items-center'>
-                                    <input required type='radio' className='radio mr-2 radio-info' id='poco' name='category' value='poco' />
-                                    <label htmlFor='poco'>poco</label>
-                                </div>
-                                <div className='flex items-center'>
-                                    <input required type='radio' className='radio mr-2 radio-info' id='xiaomi' name='category' value='xiaomi' />
-                                    <label htmlFor='xiaomi'>xiaomi</label>
-                                </div>
+                            {/*----------------- input image ---------------*/}
+                            <div>
+                                <label className='label'>
+                                    <span className='label-text'>product image</span>
+                                </label>
+                                <input {...register("poduct_Image", { required: true })} required type='file' name='poduct_Image' />
                             </div>
                         </div>
                         <button className='btn form-control mt-6 btn-primary'>submit</button>

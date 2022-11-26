@@ -16,9 +16,6 @@ const useHost = (email) => {
                     if (result?.role === "host") {
                         return setIsHost(true);
                     }
-                    if (result.message) {
-                        toast.error(result.message);
-                    }
                 })
                 .catch((err) => {
                     setHostLoading(false);

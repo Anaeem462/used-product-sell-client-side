@@ -8,7 +8,7 @@ import useAdmin from "./../../../../utilities/hooks/useAdmin";
 
 const Dashboard = () => {
     const { user } = useContext(AuthContext);
-
+    const [isAdmin, adminLoading] = useAdmin(user?.email);
     const [isHost] = useHost(user?.email);
 
     return (
@@ -24,7 +24,7 @@ const Dashboard = () => {
                     <ul className='menu p-4 w-80 bg-base-100 text-base-content'>
                         {/* <!-- Sidebar content here --> */}
 
-                        {!isHost && (
+                        {!isHost && !isAdmin && (
                             <li>
                                 <Link to='/dashboard/myorders'>MY Orders</Link>
                             </li>
@@ -43,18 +43,19 @@ const Dashboard = () => {
                                 </li>
                             </>
                         )}
-
-                        <>
-                            <li>
-                                <Link to='/dashboard/allsellers'>All Sellers</Link>
-                            </li>
-                            <li>
-                                <Link to='/dashboard/allbuyers'>All Buyers</Link>
-                            </li>
-                            <li>
-                                <Link to='/reporteditems'>reported items</Link>
-                            </li>
-                        </>
+                        {!isHost && isAdmin && (
+                            <>
+                                <li>
+                                    <Link to='/dashboard/allsellers'>All Sellers</Link>
+                                </li>
+                                <li>
+                                    <Link to='/dashboard/allbuyers'>All Buyers</Link>
+                                </li>
+                                <li>
+                                    <Link to='/reporteditems'>reported items</Link>
+                                </li>
+                            </>
+                        )}
                     </ul>
                 </div>
             </div>

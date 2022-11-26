@@ -39,3 +39,9 @@ const handleAddDoctor = (data) => {
             }
         });
 };
+<div>
+    <label className='label'>
+        <span className='label-text'>product image</span>
+    </label>
+    <input {...register("phtot", { required: true })} required type='file' name='photo' />
+</div>;

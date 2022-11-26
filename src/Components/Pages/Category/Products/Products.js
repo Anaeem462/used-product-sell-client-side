@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../../Context/AuthProvider";
-
+import { MdVerifiedUser } from "@react-icons/all-files/md/MdVerifiedUser";
 const Products = ({ product, handleBooked }) => {
+    console.log(product);
     return (
         <div>
             <div className='card card-compact w-96 bg-base-100 shadow-2xl'>
@@ -12,8 +13,17 @@ const Products = ({ product, handleBooked }) => {
                 <div className='card-body'>
                     <div>
                         <h2 className='text-2xl font-semibold text-center '>{product.name}</h2>
+
                         <div className='grid gap-2 my-2 text-[16px] font-semibold font-sans'>
-                            <p>Seller : {product.seller}</p>
+                            <div className='flex '>
+                                <p>Seller : {product.seller}</p>
+
+                                {product.verified ? (
+                                    <MdVerifiedUser className='text-blue-500 text-2xl' />
+                                ) : (
+                                    <MdVerifiedUser className='text-gray-500 text-2xl' />
+                                )}
+                            </div>
                             <p> {product.location}</p>
 
                             <div className='flex justify-between'>

@@ -23,9 +23,10 @@ const MyProducts = () => {
     if (!user.email) {
         return refetch();
     }
+    console.log(data);
     const handleAdvertise = () => {};
     const handleDelete = (product) => {
-        fetch(`${process.env.REACT_APP_SERVER_URL}/myproducts?id${product._id}`, {
+        fetch(`${process.env.REACT_APP_SERVER_URL}/myproducts?id=${product._id}`, {
             method: "DELETE",
             headers: { authorization: localStorage.getItem("userToken") },
         })
@@ -59,10 +60,10 @@ const MyProducts = () => {
                             <tr key={product._id} className='hover'>
                                 <th>{i + 1}</th>
                                 <td>
-                                    <img className='w-10 h-10' src={product.productImage} alt='' />
+                                    <img className='w-10 h-10' src={product.poduct_Image} alt='' />
                                 </td>
-                                <td>{product.productName}</td>
-                                <td>{product.procutPrice}</td>
+                                <td>{product.name}</td>
+                                <td>${product.resale_Price}</td>
                                 <td>
                                     <Link onClick={() => handleAdvertise(product)} className='btn btn-xs btn-primary'>
                                         {product.payment ? "sold" : "unsold"}

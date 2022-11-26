@@ -86,16 +86,28 @@ export const routers = createBrowserRouter([
             },
             {
                 path: "/dashboard/myproducts",
-                element: <MyProducts></MyProducts>,
+                element: (
+                    <HostRouter>
+                        <MyProducts></MyProducts>
+                    </HostRouter>
+                ),
             },
 
             {
                 path: "/dashboard/allbuyers",
-                element: <AllBuyers></AllBuyers>,
+                element: (
+                    <AdminRoute>
+                        <AllBuyers></AllBuyers>
+                    </AdminRoute>
+                ),
             },
             {
                 path: "/dashboard/allsellers",
-                element: <AllSellers></AllSellers>,
+                element: (
+                    <AdminRoute>
+                        <AllSellers></AllSellers>
+                    </AdminRoute>
+                ),
             },
         ],
     },

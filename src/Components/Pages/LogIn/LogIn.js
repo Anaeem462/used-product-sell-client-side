@@ -45,7 +45,7 @@ const LogIn = () => {
         googleSignin()
             .then((result) => {
                 toast.success("successfully google log in");
-                saveUser(result.user.email, result.user.displayName, "", result.user.uid, result.providerId, from, navigate);
+                saveUser(result.user.email, result.user.displayName, "user", result.user.uid, result.providerId, from, navigate);
                 // console.log(result);
             })
             .catch((err) => {
@@ -76,7 +76,7 @@ const LogIn = () => {
                         Don't have an account? <Link to='/signup'>sign up</Link>
                     </p>
                     <div className='form-control mt-6'>
-                        <button className='btn btn-primary'> Log in</button>
+                        <button className='w-full btn bg-neutral text-white'> Log in</button>
                     </div>
 
                     <FcGoogle className='text-3xl btn w-full btn-outline my-3 py-2' onClick={handleGoogleSignUp} />

@@ -25,7 +25,7 @@ const SignUp = () => {
     // form submit handler
     const onSubmit = (data) => {
         const { name, email, password, role } = data;
-        console.log(data);
+        // console.log(data);
         setSignUpError("");
         // create user in firebase
         createUser(email, password)
@@ -44,11 +44,11 @@ const SignUp = () => {
                         .catch((err) => {
                             toast.error("set name unsuccessfull");
                             setSignUpError(err.message);
-                            console.log("update- profie", err.message);
+                            // console.log("update- profie", err.message);
                         });
                 }
 
-                console.log("sign up js line-45", result.user);
+                // console.log( result.user);
             })
             .catch((err) => {
                 toast.error(err.message);
@@ -140,7 +140,7 @@ const SignUp = () => {
                             <option value='user' defaultValue='user'>
                                 user
                             </option>
-                            <option value='seller'>seller</option>
+                            <option value='host'>seller</option>
                         </select>
                     </div>
                     {/*-----------------link to log in--------------- */}
