@@ -48,7 +48,13 @@ const BookingModal = ({ productData, handleSubmit }) => {
                                 <label className='label'>
                                     <span className='label-text'>Product Price</span>
                                 </label>
-                                <input type='text' value={`${productData?.resale_Price}`} name='price' disabled className='input input-bordered' />
+                                <input
+                                    type='text'
+                                    value={`${productData?.resale_Price || productData?.resale_price}`}
+                                    name='price'
+                                    disabled
+                                    className='input input-bordered'
+                                />
                             </div>
                             <button htmlFor='booking-modal' className='btn form-control mt-6 btn-primary'>
                                 submit

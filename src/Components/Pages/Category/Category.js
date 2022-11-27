@@ -44,6 +44,7 @@ const Category = () => {
         const buyerLocation = form.location.value;
         const productPrice = form.price.value;
         const productId = productData._id;
+        const sellerEmail = productData.seller_email;
 
         const bookingInfo = {
             buyerName,
@@ -54,6 +55,7 @@ const Category = () => {
             productId,
             productName,
             productImage: productData.poduct_Image,
+            sellerEmail,
         };
         fetch(`${process.env.REACT_APP_SERVER_URL}/orders?id=${productId}`, {
             method: "PUT",
@@ -71,7 +73,10 @@ const Category = () => {
                     toast.error(result.message);
                 }
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                toast.error(err.message);
+                // console.log(err.message);
+            });
     };
 
     return (

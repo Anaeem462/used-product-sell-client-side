@@ -4,7 +4,7 @@ import HomeCard from "../HomeCard/HomeCard";
 import { Player } from "@lottiefiles/react-lottie-player";
 const Home = () => {
     return (
-        <div>
+        <div className='mt-7'>
             <Carousel></Carousel>
 
             <HomeCard></HomeCard>

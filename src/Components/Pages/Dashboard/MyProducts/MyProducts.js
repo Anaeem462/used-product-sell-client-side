@@ -23,7 +23,7 @@ const MyProducts = () => {
     if (!user.email) {
         return refetch();
     }
-    console.log(data);
+
     const handleAdvertise = () => {};
     const handleDelete = (product) => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/myproducts?id=${product._id}`, {
@@ -36,9 +36,12 @@ const MyProducts = () => {
                     toast.success("successfully deleted item");
                 }
                 refetch();
-                console.log(result);
+                // console.log(result);
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                toast.error(err.message);
+                // console.log(err.message);
+            });
     };
     return (
         <div>
@@ -63,7 +66,7 @@ const MyProducts = () => {
                                     <img className='w-10 h-10' src={product.poduct_Image} alt='' />
                                 </td>
                                 <td>{product.name}</td>
-                                <td>${product.resale_Price}</td>
+                                <td>${product.resale_Price || product.resale_price}</td>
                                 <td>
                                     <Link onClick={() => handleAdvertise(product)} className='btn btn-xs btn-primary'>
                                         {product.payment ? "sold" : "unsold"}

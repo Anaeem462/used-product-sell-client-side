@@ -27,21 +27,22 @@ const MyOrders = () => {
     }
     // ordersProducts, remainningProducts
     const handleDelete = (product) => {
-        console.log(product);
-
         fetch(`${process.env.REACT_APP_SERVER_URL}/orders?id=${product._id}`, {
             method: "DELETE",
             headers: { authorization: localStorage.getItem("userToken") },
         })
             .then((res) => res.json())
             .then((result) => {
-                console.log(result);
+                // console.log(result);
                 if (result.deletedCount > 0) {
                     refetch();
                     toast.success("successfully deleted");
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                toast.error(err.message);
+                // console.log(err);
+            });
         // console.log(data);
     };
 

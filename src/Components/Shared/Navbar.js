@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { FaBars } from "@react-icons/all-files/fa/FaBars";
 import { useQuery } from "@tanstack/react-query";
@@ -54,13 +54,13 @@ const Navbar = () => {
                 </>
             )}
             <li>
-                <Link to='/blog'>Blog</Link>
+                <NavLink gto='/blog'>Blog</NavLink>
             </li>
         </>
     );
     return (
         <div>
-            <div className='navbar justify-between bg-base-100'>
+            <div className='navbar justify-between bg-base-100 mt-2'>
                 <div className='navbar-start '>
                     <div className='dropdown'>
                         <label tabIndex={0} className='btn btn-ghost  lg:hidden'>

@@ -31,12 +31,12 @@ const LogIn = () => {
                     saveUser(email, name, "", password, "", from, navigate);
                 }
 
-                console.log(result.user);
+                // console.log(result.user);
             })
             .catch((err) => {
                 toast.error(err.message);
                 setLoginError(err.message);
-                console.log(err);
+                // console.log(err);
                 form.reset();
             });
     };

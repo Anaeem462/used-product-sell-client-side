@@ -18,6 +18,7 @@ import AdminRoute from "./AdminRoute";
 
 import PrivateRoute from "./PrivateRoute";
 import HostRouter from "./HostRouter";
+import MyBuyers from "../Components/Pages/Dashboard/MyBuyers/MyBuyers";
 
 export const routers = createBrowserRouter([
     {
@@ -92,7 +93,14 @@ export const routers = createBrowserRouter([
                     </HostRouter>
                 ),
             },
-
+            {
+                path: "/dashboard/mybuyers",
+                element: (
+                    <HostRouter>
+                        <MyBuyers></MyBuyers>
+                    </HostRouter>
+                ),
+            },
             {
                 path: "/dashboard/allbuyers",
                 element: (

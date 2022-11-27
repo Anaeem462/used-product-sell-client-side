@@ -6,6 +6,7 @@ import Spinner from "../../../Shared/spinner/Spinner";
 
 const AllSellers = () => {
     const [verify, setVerify] = useState(false);
+
     const { data, isLoading, refetch } = useQuery({
         queryKey: ["allsellers"],
         queryFn: async () => {
@@ -34,7 +35,10 @@ const AllSellers = () => {
                 }
                 refetch();
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                toast.error(err.message);
+                // console.log(err.message);
+            });
     };
     const handleDelete = (user) => {
         fetch(`${process.env.REACT_APP_SERVER_URL}/deleteuser?id=${user._id}`, {
@@ -47,9 +51,12 @@ const AllSellers = () => {
                     toast.success(`successfully deleted ${user.name}`);
                 }
                 refetch();
-                console.log(result);
+                // console.log(result);
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                toast.error(err.message);
+                // console.log(err.message);
+            });
     };
     return (
         <div>

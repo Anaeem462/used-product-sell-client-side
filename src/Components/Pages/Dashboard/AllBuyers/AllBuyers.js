@@ -35,7 +35,7 @@ const AllBuyers = () => {
             })
             .catch((err) => {
                 toast.error(err.message);
-                console.log(err.message);
+                // console.log(err.message);
             });
     };
 
@@ -50,9 +50,12 @@ const AllBuyers = () => {
                     toast.success(`successfully deleted ${user.name}`);
                 }
                 refetch();
-                console.log(result);
+                // console.log(result);
             })
-            .catch((err) => console.log(err.message));
+            .catch((err) => {
+                toast.error(err.message);
+                // console.log(err.message);
+            });
     };
     return (
         <div>

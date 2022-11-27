@@ -27,7 +27,7 @@ const Products = ({ product, handleBooked }) => {
 
                             <div className='flex justify-between'>
                                 <span className=''>Orginal Price: ${product.orginal_Price}</span>
-                                <span className=''>Resale Price: ${product.resale_Price}</span>
+                                <span className=''>Resale Price: ${product.resale_Price || product?.resale_price}</span>
                             </div>
                             <div className='flex justify-between'>
                                 <span>Published Date : {product.date}</span>

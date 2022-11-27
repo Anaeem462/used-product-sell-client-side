@@ -95,10 +95,10 @@ const CheckOut = ({ data }) => {
                 .then((result) => {
                     toast.success("payment successfully");
                     navigate("/dashboard/myorders");
-                    console.log(result);
+                    // console.log(result);
                 })
                 .catch((err) => {
-                    console.error("payments unsuccessfull", err.message);
+                    // console.error("payments unsuccessfull", err.message);
                     toast.error(err.message);
                 });
         }

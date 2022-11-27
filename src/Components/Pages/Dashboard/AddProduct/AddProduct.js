@@ -6,25 +6,35 @@ import { AuthContext } from "../../../../Context/AuthProvider";
 const AddProduct = () => {
     const { user } = useContext(AuthContext);
     const imgbbUrl = process.env.REACT_APP_imgbbUrl;
+
+    //form hadler
     const {
         reset,
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+
+    //make date
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth();
     const day = date.getDate();
-    const fulldate = day + " " + month + " " + year;
-    const onSubmit = (data) => {
-        //make date
+    const fulldate = day + "/" + month + "/" + year;
 
+    //make orginal_price
+
+    const price = Math.round(Math.random() * 20 + 10);
+
+    const onSubmit = (data) => {
         // make image url
         const image = data.poduct_Image[0];
         const formdata = new FormData();
         formdata.append("image", image);
-        console.log(data);
+
+        // console.log(err.message);
+
+        // image upload get link
         fetch(imgbbUrl, { method: "POST", body: formdata })
             .then((res) => res.json())
             .then((imagedata) => {
@@ -32,6 +42,7 @@ const AddProduct = () => {
                     const photoUrl = imagedata.data.url;
                     data.poduct_Image = photoUrl;
                     data["date"] = fulldate;
+                    data["orginal_Price"] = parseInt(data.resale_price) + price;
 
                     // ---------------set products in db---------
                     fetch(`${process.env.REACT_APP_SERVER_URL}/products`, {
@@ -72,7 +83,7 @@ const AddProduct = () => {
                                     type='text'
                                     name='seller'
                                     value={user?.displayName}
-                                    // readOnly
+                                    readOnly
                                     className='input input-bordered'
                                 />
                             </div>
@@ -88,7 +99,7 @@ const AddProduct = () => {
                                     type='email'
                                     name='seller_email'
                                     value={user?.email}
-                                    // readOnly
+                                    readOnly
                                     className='input input-bordered'
                                 />
                             </div>
@@ -144,7 +155,7 @@ const AddProduct = () => {
                                     <span className='label-text'>Product Price</span>
                                 </label>
                                 <input
-                                    {...register("resale_Price", { required: true })}
+                                    {...register("resale_price", { required: true })}
                                     type='text'
                                     name='resale_price'
                                     className='input input-bordered'

@@ -32,7 +32,7 @@ const Carousel = () => {
             <div className='carousel w-full'>
                 {carouselImagesData.map((carousel, i) => (
                     <div key={i} id={carousel.id} className='carousel-item relative w-full mt-4 '>
-                        <img src={carousel.img} className='w-full rounded-md h-[450px] ' />
+                        <img src={carousel.img} className='w-full rounded-t-md h-[450px] ' />
                         <div className='absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2'>
                             <a href={carousel.prev} className='btn btn-circle'>
                                 ❮

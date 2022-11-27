@@ -4,7 +4,7 @@ import { FcGoogle } from "@react-icons/all-files/fc/FcGoogle";
 import { FaGithub } from "@react-icons/all-files/fa/FaGithub";
 const Footer = () => {
     return (
-        <footer className='footer footer-center p-10 bg-neutral text-white rounded'>
+        <footer className='footer footer-center p-10 bg-neutral text-white rounded-t-md'>
             <div className='grid grid-flow-col gap-4'>
                 <Link to='/' className='link link-hover'>
                     About us
