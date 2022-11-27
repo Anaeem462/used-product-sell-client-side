@@ -1,5 +1,8 @@
 site live link :https://second-sell-auth.web.app
 
+admin-Email  : abnaeem@gmail.com
+admin-Password  : 123456@a
+
 1. This site is made for used phone resale marketing .
 2. Here is 3 category of phone, Thats are a)iPhone ,b)poco , 3)xiaomi in homepage middle section .
 3. you cannot see phone if you doesn't select a category.
