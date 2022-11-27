@@ -54,7 +54,7 @@ const Navbar = () => {
                 </>
             )}
             <li>
-                <NavLink gto='/blog'>Blog</NavLink>
+                <Link gto='/blog'>Blog</Link>
             </li>
         </>
     );
