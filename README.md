@@ -1,3 +1,8 @@
+
+server-side-code-link : https://github.com/Anaeem462/used-product-sell-server-side.git
+
+live-site-link : https://second-sell-auth.web.app/
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
