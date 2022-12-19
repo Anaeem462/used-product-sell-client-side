@@ -3,6 +3,9 @@ server-side-code-link : https://github.com/Anaeem462/used-product-sell-server-si
 
 live-site-link : https://second-sell-auth.web.app/
 
+admin gmail : abnaeem@gmail.com
+admin password : 123456@a
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
