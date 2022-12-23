@@ -5,7 +5,7 @@ import { routers } from "./Routes/Routers";
 import { Player } from "@lottiefiles/react-lottie-player";
 function App() {
     return (
-        <div className='container mx-auto px-4'>
+        <div className=' container m-0 p-0  md:mx-auto md:px-4'>
             <Toaster></Toaster>
 
             <RouterProvider router={routers}></RouterProvider>

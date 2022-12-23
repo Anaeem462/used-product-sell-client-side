@@ -4,9 +4,10 @@ import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import saveUser from "../../../utilities/function/saveUser";
+import Spinner from "../../Shared/spinner/Spinner";
 
 const LogIn = () => {
-    const { login, googleSignin, updateUserProfile } = useContext(AuthContext);
+    const { login, googleSignin, updateUserProfile, loading } = useContext(AuthContext);
     const [loginError, setLoginError] = useState();
     //location
     const location = useLocation();
@@ -73,10 +74,13 @@ const LogIn = () => {
                     </div>
                     <p className='text-red-700 text-[12px]'>{loginError}</p>
                     <p>
-                        Don't have an account? <Link to='/signup'>sign up</Link>
+                        Don't have an account?{" "}
+                        <Link to='/signup' className='hover:link text-blue-500 font-bold'>
+                            sign up
+                        </Link>
                     </p>
                     <div className='form-control mt-6'>
-                        <button className='w-full btn bg-neutral text-white'> Log in</button>
+                        <button className='w-full btn bg-neutral text-white'>{loading ? <Spinner spinnerProps='w-6 h-6' /> : "Log In"}</button>
                     </div>
 
                     <FcGoogle className='text-3xl btn w-full btn-outline my-3 py-2' onClick={handleGoogleSignUp} />

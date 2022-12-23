@@ -1,47 +1,60 @@
 import React from "react";
+import { useState } from "react";
 
 const Carousel = () => {
+    const [current, setCurrent] = useState(0);
+
     const carouselImagesData = [
         {
-            id: "slide1",
-            prev: "#slide4",
-            after: "#slide2",
-            img: "https://res.cloudinary.com/jerrick/image/upload/v1612861923/602251e3c53536001cefd834.png",
+            id: 1,
+
+            img: "https://img.freepik.com/free-vector/isometric-mobile-phone-background-template_52683-7075.jpg?w=996&t=st=1670565832~exp=1670566432~hmac=a5c269068ab89515b231191851a41ac74e823e0a609f67188903978f7460db5f",
         },
         {
-            id: "slide2",
-            prev: "#slide1",
-            after: "#slide3",
-            img: "https://s3b.cashify.in/gpro/uploads/2022/10/21173759/Want-To-Sell-Old-Xiaomi-Redmi-9A-Sport_-Get-The-Best-Buyback-Value.jpg",
+            id: 2,
+
+            img: "https://img.freepik.com/free-vector/realistic-phones-different-views_52683-28436.jpg?w=996&t=st=1670565572~exp=1670566172~hmac=6ee423f88063113c132f831a44c9840fbe983bb1b536e8338acceaf067d911cc",
         },
         {
-            id: "slide3",
-            prev: "#slide2",
-            after: "#slide4",
-            img: "https://scontent.fcgp13-1.fna.fbcdn.net/v/t39.30808-6/272953139_260566636215948_409819089903184587_n.jpg?stp=dst-jpg_p180x540&_nc_cat=106&ccb=1-7&_nc_sid=730e14&_nc_ohc=0dfLt27HVDEAX9pL8ec&_nc_ht=scontent.fcgp13-1.fna&oh=00_AfCyiDntEHuB81VufCS4mCWbip2h5Vjif4LAlPCsw0iiGQ&oe=6387B054",
+            id: 3,
+
+            img: "https://img.freepik.com/free-vector/gradient-smartphone-isometric-technology-background_52683-6157.jpg?w=996&t=st=1670565915~exp=1670566515~hmac=a622be806d48280dbc42a92fea43f0e3338399c51d2144f40c53c2a93c603374",
         },
         {
-            id: "slide4",
-            prev: "#slide3",
-            after: "#slide1",
+            id: 4,
+
             img: "https://res.cloudinary.com/jerrick/image/upload/f_jpg,fl_progressive,q_auto,w_1024/602e1766b2f2e2001df1ab62.png",
         },
     ];
+
+    const length = carouselImagesData.length - 1;
+
+    const nextImage = () => {
+        setCurrent(current === length ? 0 : current + 1);
+    };
+    const prevImage = () => {
+        setCurrent(current === 0 ? length : current - 1);
+    };
+
+    setTimeout(() => {
+        setCurrent(current === length ? 0 : current + 1);
+    }, 10000);
+
     return (
-        <div>
-            <div className='carousel w-full'>
-                {carouselImagesData.map((carousel, i) => (
-                    <div key={i} id={carousel.id} className='carousel-item relative w-full mt-4 '>
-                        <img src={carousel.img} className='w-full rounded-t-md h-[450px] ' />
-                        <div className='absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2'>
-                            <a href={carousel.prev} className='btn btn-circle'>
-                                ❮
-                            </a>
-                            <a href={carousel.after} className='btn btn-circle'>
-                                ❯
-                            </a>
-                        </div>
-                    </div>
+        <div className='relative '>
+            <div className='z-10 absolute  w-full top-[50%]'>
+                <div className='flex justify-between  '>
+                    <a onClick={prevImage} className='btn btn-circle btn-warning ml-5'>
+                        ❮
+                    </a>
+                    <a onClick={nextImage} className='btn btn-circle btn-warning  mr-5'>
+                        ❯
+                    </a>
+                </div>
+            </div>
+            <div className='relative z-0'>
+                {carouselImagesData?.map((image, i) => (
+                    <div key={i}>{i === current && <img src={image.img} alt='' className={`w-full h-auto  lg:h-[600px] `} />}</div>
                 ))}
             </div>
         </div>

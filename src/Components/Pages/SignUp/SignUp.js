@@ -5,9 +5,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthProvider";
 import { toast } from "react-hot-toast";
 import { Controller, useForm } from "react-hook-form";
+import Spinner from "../../Shared/spinner/Spinner";
 
 const SignUp = () => {
-    const { createUser, googleSignin, updateUserProfile } = useContext(AuthContext);
+    const { createUser, googleSignin, updateUserProfile, loading } = useContext(AuthContext);
 
     const [signUpError, setSignUpError] = useState();
     //location
@@ -138,18 +139,23 @@ const SignUp = () => {
                         {/*----------------input user role----------------- */}
                         <select {...register("role")} className='select select-bordered w-full  my-2'>
                             <option value='user' defaultValue='user'>
-                                user
+                                User
                             </option>
-                            <option value='host'>seller</option>
+                            <option value='host'>Seller</option>
                         </select>
                     </div>
                     {/*-----------------link to log in--------------- */}
                     <p>
-                        Already have an account? <Link to='/login'>log in</Link>
+                        Already have an account?{" "}
+                        <Link to='/login' className='hover:link text-blue-500 font-bold'>
+                            log in
+                        </Link>
                     </p>
 
                     {/*----------------sign up submit button----------------- */}
-                    <input type='submit' value='Sign up' className='w-full btn bg-neutral mt-4 text-white' />
+                    <button className='w-full btn bg-neutral mt-4 text-white'>
+                        {loading ? <Spinner spinnerParent={""} spinnerProps='w-6 h-6' /> : "Sign Up"}
+                    </button>
 
                     {/*----------------sign up by google----------------- */}
 

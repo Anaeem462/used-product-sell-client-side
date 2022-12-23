@@ -1,11 +1,11 @@
 import React from "react";
 import { Player } from "@lottiefiles/react-lottie-player";
 
-const Spinner = () => {
+const Spinner = ({ spinnerProps = "w-12 h-12  ", spinnerParent = "flex justify-center  items-center   w-full" }) => {
     return (
-        <div className='flex justify-center mt-48 mx-auto items-center h-full w-full'>
-            <div className='spinner-border animate-spin inline-block w-20 h-20 border-4 rounded-full border-red-600 border-l-none' role='status'>
-                <Player src='https://assets4.lottiefiles.com/packages/lf20_6pgBO2srnh.json' className='w-24 h-24' autoplay loop></Player>
+        <div className={`${spinnerParent} h-screen`}>
+            <div className={`spinner-border animate-spin  w-12 h-12 border-2 rounded-full ${spinnerProps} border-cyan-500 border-l-0 `} role='status'>
+                {/* <Player src='https://assets4.lottiefiles.com/packages/lf20_6pgBO2srnh.json' className='w-24 h-24' autoplay loop></Player> */}
             </div>
         </div>
     );

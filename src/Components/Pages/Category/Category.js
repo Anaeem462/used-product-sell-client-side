@@ -82,7 +82,7 @@ const Category = () => {
     return (
         <div>
             <div className=' flex justify-center my-12'>
-                <div className='grid md:grid-cols-2  lg:grid-cols-3 gap-20 items-center  mx-0 '>
+                <div className='grid md:grid-cols-2  xl:grid-cols-3 gap-14 items-center  mx-0 '>
                     {data?.map((product) => (
                         <Products key={product._id} product={product} handleBooked={handleBooked}></Products>
                     ))}

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { AuthContext } from "../../../../Context/AuthProvider";
 import useHost from "../../../../utilities/hooks/UseHost";
@@ -16,17 +16,17 @@ const Dashboard = () => {
             <Navbar></Navbar>
             <div className='drawer drawer-mobile'>
                 <input id='my-drawer-2' type='checkbox' className='drawer-toggle' />
-                <div className='drawer-content  items-center justify-center'>
+                <div className={`drawer-content bg-gradient-to-tr to-[#40c9ff] from-[#e81cff] flex justify-center`}>
                     <Outlet></Outlet>
                 </div>
                 <div className='drawer-side'>
                     <label htmlFor='my-drawer-2' className='drawer-overlay'></label>
-                    <ul className='menu p-4 w-80 bg-base-100 text-base-content'>
+                    <ul className='menu p-4 w-60 bg-gradient-to-br font-bold text-xl from-[#557c93] to-[#08203e]  text-white '>
                         {/* <!-- Sidebar content here --> */}
 
                         {!isHost && !isAdmin && (
                             <li>
-                                <Link to='/dashboard/myorders'>MY Orders</Link>
+                                <Link to='/dashboard'>MY Orders</Link>
                             </li>
                         )}
 
