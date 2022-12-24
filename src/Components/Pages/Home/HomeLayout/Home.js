@@ -2,6 +2,7 @@ import React from "react";
 import Carousel from "../Carousel/Carousel";
 import HomeCard from "../HomeCard/HomeCard";
 import { Player } from "@lottiefiles/react-lottie-player";
+import Carousel1 from "../Carousel/Carousel1";
 const Home = () => {
     return (
         <div className=' scroll-smooth'>
@@ -32,6 +33,7 @@ const Home = () => {
                         autoplay></Player>
                 </div>
             </div>
+            <Carousel1></Carousel1>
         </div>
     );
 };

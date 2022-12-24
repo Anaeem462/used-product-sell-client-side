@@ -1,0 +1,22 @@
+.mycarousel {
+    overflow-x: hidden;
+}
+.mycarousel img {
+    position: relative;
+    animation: mymove 15s infinite;
+
+    animation-timing-function: linear;
+    animation-direction: reverse;
+}
+@keyframes mymove {
+    /* 0% {
+        right: 0;
+    }
+    50% {
+        right: 100%;
+    } */
+    100% {
+        /* right: 200%; */
+        transform: translateX(-2500px);
+    }
+}

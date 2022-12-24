@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-
+import "./Carousel.css";
 import img1 from "../../../../assets/carousel-images/carousel-images-2.jfif";
 import img2 from "../../../../assets/carousel-images/carousel-images-3.jfif";
 import img3 from "../../../../assets/carousel-images/carousel-images-4.jfif";
@@ -36,7 +36,7 @@ const Carousel = () => {
     };
 
     setTimeout(() => {
-        setCurrent(current === length ? 0 : current + 1);
+        nextImage();
     }, 5000);
 
     return (
@@ -53,7 +53,7 @@ const Carousel = () => {
             </div>
             <div className='relative z-0'>
                 {carouselImagesData?.map((image, i) => (
-                    <div key={i}>{i === current && <img src={image.img} alt='' className={`w-full  `} />}</div>
+                    <div key={i}>{i === current && <img src={image.img} alt='' className={`w-full `} />}</div>
                 ))}
             </div>
         </div>
