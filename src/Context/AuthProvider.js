@@ -53,6 +53,8 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, { displayName: name });
     };
 
+    // Delete user
+
     // set current user data
 
     useEffect(() => {
