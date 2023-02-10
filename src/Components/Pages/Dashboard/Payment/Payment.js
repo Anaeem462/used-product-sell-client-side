@@ -9,7 +9,7 @@ const Payment = () => {
     const data = useLoaderData();
     const { buyerEmail, productName, productPrice } = data;
     return (
-        <div className='mt-4 '>
+        <div className='mt-4 w-full h-screen'>
             <h1 className='text-3xl bold text-center '>
                 Payment for <span className='text-success font-bold'>{productName}</span>
             </h1>

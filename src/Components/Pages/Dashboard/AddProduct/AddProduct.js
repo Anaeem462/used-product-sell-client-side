@@ -66,8 +66,8 @@ const AddProduct = () => {
     };
 
     return (
-        <div>
-            <div className='flex justify-center my-12'>
+        <div className='w-full'>
+            <div className='flex justify-center my-12 '>
                 <div className='card w-1/2  shadow-2xl'>
                     <form onSubmit={handleSubmit(onSubmit)} className='card-body'>
                         <h1 className='text-2xl text-primary font-bold text-center'>Add A Product</h1>
